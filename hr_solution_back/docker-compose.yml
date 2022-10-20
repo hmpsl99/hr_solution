@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+
+  django_web:
+    build: .
+    command: >
+      ash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 8000"
+    volumes:
+      - .:/app/
+    env_file:
+      - ./.env
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis_val:/data
+  celery:
+    restart: always
+    image: hr_solution_back_django_web
+    command: >
+      ash -c "touch celery.log && celery -A hr_solution_back worker --loglevel=info &> celery.log"
+    volumes:
+      - .:/app
+    depends_on:
+      - django_web
+      - redis
+volumes:
+  redis_val:

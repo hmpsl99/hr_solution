@@ -1,0 +1,4 @@
+{% autoescape off %}
+Hi {{ user.username }},
+Please click on the link and fill out the form,http://127.0.0.1:8000{% url 'create_profile' token=token %}
+{% endautoescape %}

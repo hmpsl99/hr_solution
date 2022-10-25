@@ -18,7 +18,7 @@ class User(AbstractUser):
     role = models.IntegerField(default=UserRole.regular_employee, choices=UserRole.choices)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["username"]
 
     def generate_unique_link(self):
         if not self.is_active:
